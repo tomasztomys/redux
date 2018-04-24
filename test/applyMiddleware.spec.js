@@ -7,7 +7,7 @@ describe('applyMiddleware', () => {
   it('warns when dispatching during middleware setup', () => {
     function dispatchingMiddleware(store) {
       store.dispatch(addTodo('Dont dispatch in middleware setup'))
-      return next => action => next(action)
+      return (next) => (action) => next(action)
     }
 
     expect(() =>
@@ -17,9 +17,9 @@ describe('applyMiddleware', () => {
 
   it('wraps dispatch method with middleware once', () => {
     function test(spyOnMethods) {
-      return methods => {
+      return (methods) => {
         spyOnMethods(methods)
-        return next => action => next(action)
+        return (next) => (action) => next(action)
       }
     }
 
@@ -42,7 +42,7 @@ describe('applyMiddleware', () => {
 
   it('passes recursive dispatches through the middleware chain', () => {
     function test(spyOnMethods) {
-      return () => next => action => {
+      return () => (next) => (action) => {
         spyOnMethods(action)
         return next(action)
       }
@@ -56,7 +56,7 @@ describe('applyMiddleware', () => {
     })
   })
 
-  it('works with thunk middleware', done => {
+  it('works with thunk middleware', (done) => {
     const store = applyMiddleware(thunk)(createStore)(reducers.todos)
 
     store.dispatch(addTodoIfEmpty('Hello'))
@@ -111,7 +111,7 @@ describe('applyMiddleware', () => {
     const testCallArgs = ['test']
 
     function multiArgMiddleware() {
-      return next => (action, callArgs) => {
+      return (next) => (action, callArgs) => {
         if (Array.isArray(callArgs)) {
           return action(...callArgs)
         }
@@ -120,7 +120,7 @@ describe('applyMiddleware', () => {
     }
 
     function dummyMiddleware({ dispatch }) {
-      return next => action => dispatch(action, testCallArgs)
+      return (next) => (action) => dispatch(action, testCallArgs)
     }
 
     const store = createStore(

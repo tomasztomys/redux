@@ -9,7 +9,7 @@ describe('bindActionCreators', () => {
   beforeEach(() => {
     store = createStore(todos)
     actionCreatorFunctions = { ...actionCreators }
-    Object.keys(actionCreatorFunctions).forEach(key => {
+    Object.keys(actionCreatorFunctions).forEach((key) => {
       if (typeof actionCreatorFunctions[key] !== 'function') {
         delete actionCreatorFunctions[key]
       }

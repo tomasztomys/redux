@@ -295,7 +295,7 @@ describe('createStore', () => {
 
     const unsubscribeHandles = []
     const doUnsubscribeAll = () =>
-      unsubscribeHandles.forEach(unsubscribe => unsubscribe())
+      unsubscribeHandles.forEach((unsubscribe) => unsubscribe())
 
     const listener1 = jest.fn()
     const listener2 = jest.fn()
@@ -395,7 +395,7 @@ describe('createStore', () => {
     expect(listener4.mock.calls.length).toBe(1)
   })
 
-  it('provides an up-to-date state when a subscriber is notified', done => {
+  it('provides an up-to-date state when a subscriber is notified', (done) => {
     const store = createStore(reducers.todos)
     store.subscribe(() => {
       expect(store.getState()).toEqual([
@@ -409,7 +409,7 @@ describe('createStore', () => {
     store.dispatch(addTodo('Hello'))
   })
 
-  it('does not leak private listeners array', done => {
+  it('does not leak private listeners array', (done) => {
     const store = createStore(reducers.todos)
     store.subscribe(function() {
       expect(this).toBe(undefined)
@@ -423,7 +423,7 @@ describe('createStore', () => {
     expect(() => store.dispatch(unknownAction())).not.toThrow()
 
     function AwesomeMap() {}
-    ;[null, undefined, 42, 'hey', new AwesomeMap()].forEach(nonObject =>
+    ;[null, undefined, 42, 'hey', new AwesomeMap()].forEach((nonObject) =>
       expect(() => store.dispatch(nonObject)).toThrow(/plain/)
     )
   })
@@ -519,7 +519,7 @@ describe('createStore', () => {
 
   it('accepts enhancer as the third argument', () => {
     const emptyArray = []
-    const spyEnhancer = vanillaCreateStore => (...args) => {
+    const spyEnhancer = (vanillaCreateStore) => (...args) => {
       expect(args[0]).toBe(reducers.todos)
       expect(args[1]).toBe(emptyArray)
       expect(args.length).toBe(2)
@@ -543,7 +543,7 @@ describe('createStore', () => {
   })
 
   it('accepts enhancer as the second argument if initial state is missing', () => {
-    const spyEnhancer = vanillaCreateStore => (...args) => {
+    const spyEnhancer = (vanillaCreateStore) => (...args) => {
       expect(args[0]).toBe(reducers.todos)
       expect(args[1]).toBe(undefined)
       expect(args.length).toBe(2)
@@ -579,9 +579,9 @@ describe('createStore', () => {
       createStore(reducers.todos, undefined, undefined)
     ).not.toThrow()
 
-    expect(() => createStore(reducers.todos, undefined, x => x)).not.toThrow()
+    expect(() => createStore(reducers.todos, undefined, (x) => x)).not.toThrow()
 
-    expect(() => createStore(reducers.todos, x => x)).not.toThrow()
+    expect(() => createStore(reducers.todos, (x) => x)).not.toThrow()
 
     expect(() => createStore(reducers.todos, [])).not.toThrow()
 
@@ -721,8 +721,8 @@ describe('createStore', () => {
       const results = []
 
       const sub = observable
-        .map(state => ({ fromRx: true, ...state }))
-        .subscribe(state => results.push(state))
+        .map((state) => ({ fromRx: true, ...state }))
+        .subscribe((state) => results.push(state))
 
       store.dispatch({ type: 'foo' })
       sub.unsubscribe()

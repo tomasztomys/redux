@@ -13,8 +13,8 @@ export function addTodo(text) {
 }
 
 export function addTodoAsync(text) {
-  return dispatch =>
-    new Promise(resolve =>
+  return (dispatch) =>
+    new Promise((resolve) =>
       setImmediate(() => {
         dispatch(addTodo(text))
         resolve()
